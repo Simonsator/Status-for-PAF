@@ -19,7 +19,17 @@ public class StatusConnection extends SQLCommunication {
 	}
 
 	private void importTable() {
-
+		Connection con = getConnection();
+		PreparedStatement prepStmt = null;
+		try {
+			prepStmt = con.prepareStatement("CREATE TABLE IF NOT EXISTS " + DATABASE + ".`" + TABLE_PREFIX
+					+ "status` (`player_id` INT(8) NOT NULL, `message` varchar(100) NOT NULL);");
+			prepStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(prepStmt);
+		}
 	}
 
 	public void setStatus(int pPlayerID, String pMessage) {

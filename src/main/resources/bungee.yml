@@ -1,6 +1,6 @@
-name: Clans
+name: Status-for-Party-and-Friends
 version: ${project.version}
 author: Simonsator
 depends: [PartyAndFriends]
-main: de.simonsator.partyandfriends.clan.ClansMain
-description: An add-on for party and friends extended
+main: de.simonsator.partyandfriends.status.StatusMain
+description: An add-on for party and friends extended to set a status and show it in the gui

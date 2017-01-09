@@ -3,7 +3,9 @@ package de.simonsator.partyandfriends.status.commands;
 import de.simonsator.partyandfriends.api.TopCommand;
 import de.simonsator.partyandfriends.api.pafplayers.OnlinePAFPlayer;
 import de.simonsator.partyandfriends.status.StatusMain;
+import net.md_5.bungee.api.event.TabCompleteEvent;
 import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.event.EventHandler;
 
 /**
  * @author simonbrungs
@@ -45,5 +47,10 @@ public class StatusTopCommand extends TopCommand {
 			content.append(args[n]);
 		}
 		return content.toString();
+	}
+
+	@EventHandler
+	public void onTab(TabCompleteEvent pEvent) {
+		tabComplete(pEvent);
 	}
 }

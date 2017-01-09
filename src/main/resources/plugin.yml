@@ -1,6 +1,6 @@
-name: Clans
+name: Status-for-Party-and-Friends
 version: ${project.version}
 author: Simonsator
 depend: [PartyAndFriendsGUI]
-main: de.simonsator.partyandfriends.clan.gui.ClansGUIMain
-description: Adds parts of clans to the gui
+main: de.simonsator.partyandfriends.status.spigot.StatusSpigot
+description: An add-on for party and friends extended to set a status and show it in the gui
