@@ -1,0 +1,6 @@
+name: Clans
+version: ${project.version}
+author: Simonsator
+depends: [PartyAndFriends]
+main: de.simonsator.partyandfriends.clan.ClansMain
+description: An add-on for party and friends extended
