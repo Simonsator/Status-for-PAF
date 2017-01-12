@@ -42,7 +42,8 @@ public class StatusTopCommand extends TopCommand {
 
 	private String toString(String[] args) {
 		StringBuilder content = new StringBuilder();
-		for (int n = 0; n < args.length; ++n) {
+		content.append(args[0]);
+		for (int n = 1; n < args.length; ++n) {
 			content.append(" ");
 			content.append(args[n]);
 		}
