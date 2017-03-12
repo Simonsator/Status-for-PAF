@@ -32,7 +32,7 @@ public class StatusTopCommand extends TopCommand {
 			return;
 		}
 		String message = toString(args);
-		if (message.length() > 100) {
+		if (message.length() >= 100) {
 			pPlayer.sendMessage(getPrefix() + MESSAGE_TOO_LONG);
 			return;
 		}
