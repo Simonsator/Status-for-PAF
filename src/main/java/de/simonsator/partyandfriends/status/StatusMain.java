@@ -41,11 +41,11 @@ public class StatusMain extends Plugin implements Listener {
 	}
 
 	public void setStatus(OnlinePAFPlayer pPlayer, String pMessage) {
-		connection.setStatus(((PAFPlayerMySQL) pPlayer).getPlayerID(), pMessage);
+		connection.setStatus(((PAFPlayerMySQL) pPlayer.getPAFPlayer()).getPlayerID(), pMessage);
 	}
 
 	public String getStatus(PAFPlayer pPlayer) {
-		return connection.getStatus(((PAFPlayerMySQL) pPlayer).getPlayerID());
+		return connection.getStatus(((PAFPlayerMySQL) pPlayer.getPAFPlayer()).getPlayerID());
 	}
 
 	@EventHandler
