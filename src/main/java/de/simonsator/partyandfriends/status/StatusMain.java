@@ -1,5 +1,6 @@
 package de.simonsator.partyandfriends.status;
 
+import de.simonsator.partyandfriends.api.PAFExtension;
 import de.simonsator.partyandfriends.api.events.communication.spigot.SendDataFriendEvent;
 import de.simonsator.partyandfriends.api.pafplayers.OnlinePAFPlayer;
 import de.simonsator.partyandfriends.api.pafplayers.PAFPlayer;
@@ -10,7 +11,6 @@ import de.simonsator.partyandfriends.pafplayers.mysql.PAFPlayerMySQL;
 import de.simonsator.partyandfriends.status.commands.StatusTopCommand;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 
@@ -21,13 +21,13 @@ import java.io.IOException;
  * @author simonbrungs
  * @version 1.0.0 09.01.17
  */
-public class StatusMain extends Plugin implements Listener {
+public class StatusMain extends PAFExtension implements Listener {
 	private StatusConnection connection;
 
 	@Override
 	public void onEnable() {
 		try {
-			Configuration config = new StatusConfigurationCreator(new File(getDataFolder(), "config.yml")).getCreatedConfiguration();
+			Configuration config = new StatusConfigurationCreator(new File(getConfigFolder(), "config.yml"), this).getCreatedConfiguration();
 			connection = new StatusConnection(new MySQLData(Main.getInstance().getConfig().getString("MySQL.Host"),
 					Main.getInstance().getConfig().getString("MySQL.Username"), Main.getInstance().getConfig().getString("MySQL.Password"),
 					Main.getInstance().getConfig().getInt("MySQL.Port"), Main.getInstance().getConfig().getString("MySQL.Database"),
@@ -35,6 +35,7 @@ public class StatusMain extends Plugin implements Listener {
 			ProxyServer.getInstance().getPluginManager().registerCommand(this,
 					new StatusTopCommand(config.getStringList("Commands.TopCommands.Status.Names").toArray(new String[1]), config.getString("Commands.TopCommands.Status.Permission"), Friends.getInstance().getPrefix(), config, this));
 			ProxyServer.getInstance().getPluginManager().registerListener(this, this);
+			registerAsExtension();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,7 +51,7 @@ public class StatusMain extends Plugin implements Listener {
 
 	@EventHandler
 	public void onSendDataFriend(SendDataFriendEvent pEvent) {
-		String status = getStatus(pEvent.getPAFFriend());
+		String status = getStatus(pEvent.getPAFPlayer());
 		if (status != null)
 			pEvent.addProperty("status", status);
 	}
