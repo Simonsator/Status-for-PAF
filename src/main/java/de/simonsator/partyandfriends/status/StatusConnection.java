@@ -13,7 +13,7 @@ public class StatusConnection extends SQLCommunication {
 	private final String TABLE_PREFIX;
 
 	public StatusConnection(MySQLData pMySQLData) {
-		super(pMySQLData.DATABASE, "jdbc:mysql://" + pMySQLData.HOST + ":" + pMySQLData.PORT, pMySQLData.USERNAME, pMySQLData.PASSWORD);
+		super(pMySQLData.DATABASE, "jdbc:mysql://" + pMySQLData.HOST + ":" + pMySQLData.PORT, pMySQLData.USERNAME, pMySQLData.PASSWORD, pMySQLData.USE_SSL);
 		TABLE_PREFIX = pMySQLData.TABLE_PREFIX;
 		importTable();
 	}

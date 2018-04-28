@@ -31,7 +31,7 @@ public class StatusMain extends Plugin implements Listener {
 			connection = new StatusConnection(new MySQLData(Main.getInstance().getConfig().getString("MySQL.Host"),
 					Main.getInstance().getConfig().getString("MySQL.Username"), Main.getInstance().getConfig().getString("MySQL.Password"),
 					Main.getInstance().getConfig().getInt("MySQL.Port"), Main.getInstance().getConfig().getString("MySQL.Database"),
-					Main.getInstance().getConfig().getString("MySQL.TablePrefix")));
+					Main.getInstance().getConfig().getString("MySQL.TablePrefix"), Main.getInstance().getConfig().getBoolean("MySQL.UseSSL")));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this,
 					new StatusTopCommand(config.getStringList("Commands.TopCommands.Status.Names").toArray(new String[1]), config.getString("Commands.TopCommands.Status.Permission"), Friends.getInstance().getPrefix(), config, this));
 			ProxyServer.getInstance().getPluginManager().registerListener(this, this);
