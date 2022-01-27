@@ -1,17 +1,15 @@
 package de.simonsator.partyandfriends.status.commands;
 
-import de.simonsator.partyandfriends.api.TopCommand;
+import de.simonsator.partyandfriends.api.OnlyTopCommand;
 import de.simonsator.partyandfriends.api.pafplayers.OnlinePAFPlayer;
 import de.simonsator.partyandfriends.status.StatusMain;
-import net.md_5.bungee.api.event.TabCompleteEvent;
 import net.md_5.bungee.config.Configuration;
-import net.md_5.bungee.event.EventHandler;
 
 /**
  * @author simonbrungs
  * @version 1.0.0 09.01.17
  */
-public class StatusTopCommand extends TopCommand {
+public class StatusTopCommand extends OnlyTopCommand {
 	private final String TOO_LESS_ARGUMENTS;
 	private final String MESSAGE_TOO_LONG;
 	private final String STATUS_WAS_SET;
@@ -48,10 +46,5 @@ public class StatusTopCommand extends TopCommand {
 			content.append(args[n]);
 		}
 		return content.toString();
-	}
-
-	@EventHandler
-	public void onTab(TabCompleteEvent pEvent) {
-		tabComplete(pEvent);
 	}
 }

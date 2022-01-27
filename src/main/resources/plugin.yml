@@ -4,3 +4,4 @@ author: Simonsator
 depend: [PartyAndFriendsGUI]
 main: de.simonsator.partyandfriends.status.spigot.StatusSpigot
 description: An add-on for party and friends extended to set a status and show it in the gui
+api-version: 1.13

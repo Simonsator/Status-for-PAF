@@ -5,6 +5,7 @@ import de.simonsator.partyandfriends.api.events.communication.spigot.SendDataFri
 import de.simonsator.partyandfriends.api.pafplayers.OnlinePAFPlayer;
 import de.simonsator.partyandfriends.api.pafplayers.PAFPlayer;
 import de.simonsator.partyandfriends.communication.sql.MySQLData;
+import de.simonsator.partyandfriends.communication.sql.pool.PoolData;
 import de.simonsator.partyandfriends.friends.commands.Friends;
 import de.simonsator.partyandfriends.main.Main;
 import de.simonsator.partyandfriends.pafplayers.mysql.PAFPlayerMySQL;
@@ -16,11 +17,8 @@ import net.md_5.bungee.event.EventHandler;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
-/**
- * @author simonbrungs
- * @version 1.0.0 09.01.17
- */
 public class StatusMain extends PAFExtension implements Listener {
 	private StatusConnection connection;
 
@@ -28,15 +26,19 @@ public class StatusMain extends PAFExtension implements Listener {
 	public void onEnable() {
 		try {
 			Configuration config = new StatusConfigurationCreator(new File(getConfigFolder(), "config.yml"), this).getCreatedConfiguration();
-			connection = new StatusConnection(new MySQLData(Main.getInstance().getConfig().getString("MySQL.Host"),
-					Main.getInstance().getConfig().getString("MySQL.Username"), Main.getInstance().getConfig().getString("MySQL.Password"),
-					Main.getInstance().getConfig().getInt("MySQL.Port"), Main.getInstance().getConfig().getString("MySQL.Database"),
-					Main.getInstance().getConfig().getString("MySQL.TablePrefix"), Main.getInstance().getConfig().getBoolean("MySQL.UseSSL")));
+			PoolData poolData = new PoolData(Main.getInstance().getGeneralConfig().getInt("MySQL.Pool.MinPoolSize"),
+					Main.getInstance().getGeneralConfig().getInt("MySQL.Pool.MaxPoolSize"),
+					Main.getInstance().getGeneralConfig().getInt("MySQL.Pool.InitialPoolSize"), Main.getInstance().getGeneralConfig().getInt("MySQL.Pool.IdleConnectionTestPeriod"),
+					Main.getInstance().getGeneralConfig().getBoolean("MySQL.Pool.TestConnectionOnCheckin"), Main.getInstance().getGeneralConfig().getString("MySQL.Pool.ConnectionPool"));
+			connection = new StatusConnection(new MySQLData(Main.getInstance().getGeneralConfig().getString("MySQL.Host"),
+					Main.getInstance().getGeneralConfig().getString("MySQL.Username"), Main.getInstance().getGeneralConfig().getString("MySQL.Password"),
+					Main.getInstance().getGeneralConfig().getInt("MySQL.Port"), Main.getInstance().getGeneralConfig().getString("MySQL.Database"),
+					Main.getInstance().getGeneralConfig().getString("MySQL.TablePrefix"), Main.getInstance().getGeneralConfig().getBoolean("MySQL.UseSSL")), poolData);
 			ProxyServer.getInstance().getPluginManager().registerCommand(this,
 					new StatusTopCommand(config.getStringList("Commands.TopCommands.Status.Names").toArray(new String[1]), config.getString("Commands.TopCommands.Status.Permission"), Friends.getInstance().getPrefix(), config, this));
-			ProxyServer.getInstance().getPluginManager().registerListener(this, this);
+			getAdapter().registerListener(this, this);
 			registerAsExtension();
-		} catch (IOException e) {
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -51,7 +53,7 @@ public class StatusMain extends PAFExtension implements Listener {
 
 	@EventHandler
 	public void onSendDataFriend(SendDataFriendEvent pEvent) {
-		String status = getStatus(pEvent.getPAFPlayer());
+		String status = getStatus(pEvent.getPlayerListElement().getPlayer());
 		if (status != null)
 			pEvent.addProperty("status", status);
 	}

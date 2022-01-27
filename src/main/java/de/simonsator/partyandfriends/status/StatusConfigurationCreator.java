@@ -12,11 +12,11 @@ import java.io.IOException;
  */
 public class StatusConfigurationCreator extends ConfigurationCreator {
 	protected StatusConfigurationCreator(File pFile, PAFExtension pPlugin) throws IOException {
-		super(pFile, pPlugin);
+		super(pFile, pPlugin, true);
 		readFile();
 		loadDefaults();
 		saveFile();
-		process(configuration);
+		process();
 	}
 
 	private void loadDefaults() {
