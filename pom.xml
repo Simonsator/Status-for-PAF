@@ -39,13 +39,13 @@
 		<dependency>
 			<groupId>de.simonsator</groupId>
 			<artifactId>PAF-Bungeecord-Extended-Core</artifactId>
-			<version>1.0.234</version>
+			<version>1.0.235</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.simonsator</groupId>
 			<artifactId>Party-and-Friends-GUI-Core</artifactId>
-			<version>1.0.234</version>
+			<version>1.0.235</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
